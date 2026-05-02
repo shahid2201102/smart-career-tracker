@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getServerSession } from '@/lib/session';
-import { getUserResumes, saveResume, analyzeJobMatch } from '@/services/resumeService';
+import { getUserResumes, saveResume } from '@/services/resumeService';
 import { resumeUploadSchema } from '@/lib/validators';
 import { getErrorMessage } from '@/lib/error';
 

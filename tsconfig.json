@@ -19,7 +19,9 @@
     "jsx": "preserve",
     "incremental": true,
     "types": [
-      "node"
+      "node",
+      "jest",
+      "@testing-library/jest-dom"
     ],
     "baseUrl": ".",
     "paths": {
@@ -31,6 +33,9 @@
       ],
       "@/services/*": [
         "services/*"
+      ],
+      "@/types": [
+        "types/index"
       ],
       "@/types/*": [
         "types/*"

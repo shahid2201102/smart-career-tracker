@@ -1,9 +1,9 @@
 import OpenAI from 'openai';
 
 const apiKey = process.env.OPENAI_API_KEY?.trim();
-const hasValidApiKey = Boolean(apiKey) && !apiKey.includes('your-openai-api-key-here') && !apiKey.includes('replace-with-openai-api-key');
+const hasValidApiKey = !!(apiKey && !apiKey.includes('your-openai-api-key-here') && !apiKey.includes('replace-with-openai-api-key'));
 console.log('OpenAI API Key Check:', { hasValidApiKey, keyLength: apiKey?.length });
-export const openai = hasValidApiKey ? new OpenAI({ apiKey }) : null;
+export const openai = hasValidApiKey && apiKey ? new OpenAI({ apiKey }) : null;
 
 function fallbackResumeAnalysis() {
   return {
