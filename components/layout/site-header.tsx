@@ -16,6 +16,7 @@ type SessionUser = {
 export function SiteHeader() {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const [user, setUser] = useState<SessionUser | null>(null);
 
   useEffect(() => {
@@ -48,7 +49,7 @@ export function SiteHeader() {
   }, []);
 
   return (
-    <header className="mx-auto flex w-full max-w-7xl items-center justify-between px-6 py-5 sm:px-8">
+    <header className="relative mx-auto flex w-full max-w-7xl items-center justify-between px-6 py-5 sm:px-8">
       <Link href="/" className="text-lg font-semibold text-slate-950 dark:text-white">
         Smart Career Tracker
       </Link>
@@ -65,6 +66,22 @@ export function SiteHeader() {
             Resumes
           </Link>
         </nav>
+
+        {/* Mobile menu button */}
+        <button
+          type="button"
+          className="inline-flex items-center justify-center rounded-md p-2 text-slate-700 hover:bg-slate-100 md:hidden"
+          aria-label="Open menu"
+          onClick={() => setMobileOpen((v) => !v)}
+        >
+          <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            {mobileOpen ? (
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            ) : (
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            )}
+          </svg>
+        </button>
 
         {user ? (
           <div className="flex items-center gap-3">
@@ -85,6 +102,28 @@ export function SiteHeader() {
           {mounted && theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
         </button>
       </div>
+
+      {mobileOpen && (
+        <div className="absolute right-6 top-full mt-2 w-48 rounded-md bg-white shadow-lg p-2 md:hidden dark:bg-slate-900">
+          <Link href="/dashboard" className="block px-3 py-2 text-sm text-slate-700 hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-slate-800" onClick={() => setMobileOpen(false)}>
+            Dashboard
+          </Link>
+          <Link href="/applications" className="block px-3 py-2 text-sm text-slate-700 hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-slate-800" onClick={() => setMobileOpen(false)}>
+            Applications
+          </Link>
+          <Link href="/resumes" className="block px-3 py-2 text-sm text-slate-700 hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-slate-800" onClick={() => setMobileOpen(false)}>
+            Resumes
+          </Link>
+          {user ? (
+            <div className="mt-2 border-t border-slate-100 pt-2 dark:border-slate-800">
+              <div className="px-3 py-2 text-sm text-slate-600 dark:text-slate-400">{user.name}</div>
+              <div className="px-3 py-2">
+                <LogoutButton onLoggedOut={() => { setUser(null); setMobileOpen(false); }} />
+              </div>
+            </div>
+          ) : null}
+        </div>
+      )}
     </header>
   );
 }
