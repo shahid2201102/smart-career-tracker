@@ -55,7 +55,7 @@ export function SiteHeader() {
       </Link>
 
       <div className="flex items-center gap-3">
-        {user && (
+        {user && mounted && (
           <nav className="hidden gap-6 text-sm font-medium text-slate-600 dark:text-slate-300 md:flex">
             <Link href="/dashboard" className="hover:text-slate-950 dark:hover:text-white">
               Dashboard
@@ -107,7 +107,7 @@ export function SiteHeader() {
 
       {mobileOpen && (
         <div className="absolute right-6 top-full mt-2 w-48 rounded-md bg-white shadow-lg p-2 md:hidden dark:bg-slate-900">
-          {user && (
+          {user && mounted && (
             <>
               <Link href="/dashboard" className="block px-3 py-2 text-sm text-slate-700 hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-slate-800" onClick={() => setMobileOpen(false)}>
                 Dashboard
@@ -120,7 +120,7 @@ export function SiteHeader() {
               </Link>
             </>
           )}
-          {user ? (
+          {user && mounted ? (
             <div className="mt-2 border-t border-slate-100 pt-2 dark:border-slate-800">
               <div className="px-3 py-2 text-sm text-slate-600 dark:text-slate-400">{user.name}</div>
               <div className="px-3 py-2">
