@@ -48,6 +48,26 @@ export function SiteHeader() {
     };
   }, []);
 
+  if (!mounted) {
+    return (
+      <header className="relative mx-auto flex w-full max-w-7xl items-center justify-between px-6 py-5 sm:px-8">
+        <Link href="/" className="text-lg font-semibold text-slate-950 dark:text-white">
+          Smart Career Tracker
+        </Link>
+
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200"
+            aria-label="Toggle dark mode"
+          >
+            <Moon size={18} />
+          </button>
+        </div>
+      </header>
+    );
+  }
+
   return (
     <header className="relative mx-auto flex w-full max-w-7xl items-center justify-between px-6 py-5 sm:px-8">
       <Link href="/" className="text-lg font-semibold text-slate-950 dark:text-white">
@@ -55,7 +75,7 @@ export function SiteHeader() {
       </Link>
 
       <div className="flex items-center gap-3">
-        {user && mounted && (
+        {user && (
           <nav className="hidden gap-6 text-sm font-medium text-slate-600 dark:text-slate-300 md:flex">
             <Link href="/dashboard" className="hover:text-slate-950 dark:hover:text-white">
               Dashboard
@@ -85,7 +105,7 @@ export function SiteHeader() {
           </svg>
         </button>
 
-        {user ? (
+        {user && (
           <div className="flex items-center gap-3">
             <span className="hidden max-w-[180px] truncate text-sm text-slate-500 dark:text-slate-400 sm:inline">{user.name}</span>
             <LogoutButton
@@ -93,7 +113,7 @@ export function SiteHeader() {
               className="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 shadow-sm transition hover:border-slate-300 hover:text-slate-950 disabled:cursor-not-allowed disabled:opacity-60 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:border-slate-600 dark:hover:text-white"
             />
           </div>
-        ) : null}
+        )}
 
         <button
           type="button"
@@ -107,7 +127,7 @@ export function SiteHeader() {
 
       {mobileOpen && (
         <div className="absolute right-6 top-full mt-2 w-48 rounded-md bg-white shadow-lg p-2 md:hidden dark:bg-slate-900">
-          {user && mounted && (
+          {user && (
             <>
               <Link href="/dashboard" className="block px-3 py-2 text-sm text-slate-700 hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-slate-800" onClick={() => setMobileOpen(false)}>
                 Dashboard
@@ -120,7 +140,7 @@ export function SiteHeader() {
               </Link>
             </>
           )}
-          {user && mounted ? (
+          {user ? (
             <div className="mt-2 border-t border-slate-100 pt-2 dark:border-slate-800">
               <div className="px-3 py-2 text-sm text-slate-600 dark:text-slate-400">{user.name}</div>
               <div className="px-3 py-2">
