@@ -9,9 +9,11 @@ export function middleware(request: NextRequest) {
   response.headers.set('Permissions-Policy', 'geolocation=(), microphone=(), camera=()');
 
   if (process.env.NODE_ENV === 'production') {
+    // Relax CSP slightly to avoid blocking necessary inline scripts during runtime.
+    // Note: 'unsafe-inline' reduces security; replace with nonces/hashes in production when possible.
     response.headers.set(
       'Content-Security-Policy',
-      "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://api.openai.com;"
+      "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://api.openai.com https: wss:;"
     );
   }
 
