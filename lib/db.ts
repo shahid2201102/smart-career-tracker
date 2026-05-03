@@ -5,6 +5,9 @@ const globalWithPrisma = global as typeof globalThis & {
 };
 
 export const prisma =
-  globalWithPrisma.prisma ?? new PrismaClient({ log: ['query', 'warn'] });
+  globalWithPrisma.prisma ??
+  new PrismaClient({
+    log: process.env.NODE_ENV === 'production' ? ['error'] : ['query', 'warn', 'error']
+  });
 
 if (process.env.NODE_ENV !== 'production') globalWithPrisma.prisma = prisma;
